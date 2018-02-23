@@ -34,7 +34,7 @@ export class MyModule {}
 In an effect, you can do bind to route activations like:
 
 ```javascript
-import { ofRoute } from 'ngrx-router';
+import { ofRoute, RouteNavigation } from 'ngrx-router';
 
 @Injectable()
 export class MyEffect {
