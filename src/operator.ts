@@ -3,7 +3,7 @@ import { Action } from '@ngrx/store';
 import { filter } from 'rxjs/operators';
 import { RouteNavigation, ROUTER_NAVIGATION_TYPE } from './actions';
 
-export function ofRoute(route: string | string[]): OperatorFunction<Action, Action> {
+export function ofRoute(route: string | string[] | RegExp): OperatorFunction<Action, Action> {
   return filter((action: Action) => {
     const isRouteAction = action.type === ROUTER_NAVIGATION_TYPE;
     if (isRouteAction) {
@@ -11,6 +11,8 @@ export function ofRoute(route: string | string[]): OperatorFunction<Action, Acti
       const routePath = routeAction.payload.path;
       if (Array.isArray(route)) {
         return route.indexOf(routePath) > -1;
+      } else if (route instanceof RegExp) {
+        return route.test(routePath);
       } else {
         return routePath === route;
       }
