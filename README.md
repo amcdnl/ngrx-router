@@ -49,6 +49,12 @@ export class MyEffect {
 }
 ```
 
+The operator `ofRoute` supports the following syntax:
+
+* a simple match against a string `ofRoute('pizza/:id')`
+* a match against an array of strings `ofRoute(['pizza/:id', 'burger/:id', 'burgers'])`
+* a match against a regular expression `ofRoute(/pizza|burger/)`
+
 ### Actions
 You can also do navigation events with this library.
 
