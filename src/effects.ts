@@ -5,7 +5,7 @@ import { Effect, Actions, ofType } from '@ngrx/effects';
 import { ROUTER_GO_TYPE, ROUTER_BACK_TYPE, ROUTER_FORWARD_TYPE, RouteNavigation } from './actions';
 import { map, tap, filter } from 'rxjs/operators';
 import { Store, Action } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class RouterEffects {
