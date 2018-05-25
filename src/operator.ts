@@ -1,4 +1,4 @@
-import { OperatorFunction } from 'rxjs/interfaces';
+import { OperatorFunction } from 'rxjs';
 import { Action } from '@ngrx/store';
 import { filter } from 'rxjs/operators';
 import { RouteNavigation, ROUTER_NAVIGATION_TYPE } from './actions';

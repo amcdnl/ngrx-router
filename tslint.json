@@ -8,10 +8,6 @@
     ],
     "curly": true,
     "eofline": true,
-    "import-blacklist": [
-      true,
-      "rxjs"
-    ],
     "import-spacing": true,
     "indent": [
       true,
