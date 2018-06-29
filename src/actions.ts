@@ -28,5 +28,5 @@ export class RouterForward implements Action {
 
 export class RouteNavigation implements Action {
   readonly type = ROUTER_NAVIGATION_TYPE;
-  constructor(public payload: { path: string; params: any; queryParams: any }) {}
+  constructor(public payload: { path: string; params?: any; queryParams?: any; data?: any }) {}
 }
