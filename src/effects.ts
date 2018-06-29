@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Router, ActivationStart } from '@angular/router';
+import { Router, ActivationStart, NavigationEnd } from '@angular/router';
 import { Location } from '@angular/common';
 import { Effect, Actions, ofType } from '@ngrx/effects';
 import { ROUTER_GO_TYPE, ROUTER_BACK_TYPE, ROUTER_FORWARD_TYPE, RouteNavigation } from './actions';
-import { map, tap, filter } from 'rxjs/operators';
+import { map, tap, filter, debounce } from 'rxjs/operators';
 import { Store, Action } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
@@ -34,10 +34,13 @@ export class RouterEffects {
     this.listenToRouter();
   }
 
+  private navEnd$ = this.router.events.pipe(filter(event => event instanceof NavigationEnd));
+
   private listenToRouter() {
-    this.router.events.pipe(filter(event => event instanceof ActivationStart)).subscribe((event: any) => {
-      let route = event.snapshot;
-      if (route.component !== undefined) {
+    this.router.events
+      .pipe(filter(event => event instanceof ActivationStart), debounce(() => this.navEnd$))
+      .subscribe((event: any) => {
+        let route = event.snapshot;
         const path: any[] = [];
         const { params, queryParams } = route;
 
@@ -49,7 +52,6 @@ export class RouterEffects {
         }
         const routerState = { params, queryParams, path: path.reverse().join('/') };
         this.store.dispatch(new RouteNavigation(routerState));
-      }
-    });
+      });
   }
 }
