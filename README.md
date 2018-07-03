@@ -63,3 +63,25 @@ this.store.dispatch(new RouterGo({ path: ['pizza'] }))
 this.store.dispatch(new RouterBack())
 this.store.dispatch(new RouterForward())
 ```
+### Data
+The `RouteNavigation` event also contains data which is defined in the `Routes`:
+
+```javascript
+RouterModule.forRoot([
+  {
+    path: 'example',
+    component: DummyComponent,
+    data: { message: 'hello' },
+  }
+])
+```
+
+```javascript
+map((action: RouteNavigation) => action.payload.data.message),
+```
+
+To get data aggregated from parent routes use the configuration parameter [`paramsInheritanceStrategy`](https://angular.io/api/router/Router#paramsInheritanceStrategy):
+
+```javascript
+RouterModule.forRoot(routes, { paramsInheritanceStrategy: 'always' });
+```

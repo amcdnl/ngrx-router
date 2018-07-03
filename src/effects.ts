@@ -39,7 +39,7 @@ export class RouterEffects {
       let route = event.snapshot;
       if (route.component !== undefined) {
         const path: any[] = [];
-        const { params, queryParams } = route;
+        const { params, queryParams, data } = route;
 
         while (route.parent) {
           if (route.routeConfig && route.routeConfig.path) {
@@ -47,7 +47,7 @@ export class RouterEffects {
           }
           route = route.parent;
         }
-        const routerState = { params, queryParams, path: path.reverse().join('/') };
+        const routerState = { params, queryParams, data, path: path.reverse().join('/') };
         this.store.dispatch(new RouteNavigation(routerState));
       }
     });
