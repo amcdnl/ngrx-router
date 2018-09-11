@@ -1,4 +1,4 @@
-import { OperatorFunction } from 'rxjs';
+import { MonoTypeOperatorFunction } from 'rxjs';
 import { Action } from '@ngrx/store';
 import { filter } from 'rxjs/operators';
 import { RouteNavigation, ROUTER_NAVIGATION_TYPE } from './actions';
@@ -21,6 +21,6 @@ export function isRoute(route: string | string[] | RegExp) {
   };
 }
 
-export function ofRoute(route: string | string[] | RegExp): OperatorFunction<Action, Action> {
-  return filter(isRoute(route));
+export function ofRoute(route: string | string[] | RegExp): MonoTypeOperatorFunction<RouteNavigation> {
+  return filter<RouteNavigation>(isRoute(route));
 }
