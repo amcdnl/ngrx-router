@@ -34,7 +34,7 @@ export class MyModule {}
 In an effect, you can do bind to route activations like:
 
 ```javascript
-import { ofRoute, RouteNavigation } from 'ngrx-router';
+import { ofRoute, mapToParam, RouteNavigation } from 'ngrx-router';
 
 @Injectable()
 export class MyEffect {
@@ -43,7 +43,7 @@ export class MyEffect {
     @Effect()
     navigate$ = this.update$.pipe(
         ofRoute('pizza/:id'),
-        map((action: RouteNavigation) => action.payload.params.id),
+        mapToParam<string>('id'),
         map(id => new LoadPizza(id))
     );
 }
@@ -77,7 +77,7 @@ RouterModule.forRoot([
 ```
 
 ```javascript
-map((action: RouteNavigation) => action.payload.data.message),
+mapToData<string>('message'),
 ```
 
 To get data aggregated from parent routes use the configuration parameter [`paramsInheritanceStrategy`](https://angular.io/api/router/Router#paramsInheritanceStrategy):

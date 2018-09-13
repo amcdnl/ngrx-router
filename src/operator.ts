@@ -1,6 +1,6 @@
-import { MonoTypeOperatorFunction } from 'rxjs';
+import { MonoTypeOperatorFunction, OperatorFunction } from 'rxjs';
 import { Action } from '@ngrx/store';
-import { filter } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
 import { RouteNavigation, ROUTER_NAVIGATION_TYPE } from './actions';
 
 export function isRoute(route: string | string[] | RegExp) {
@@ -23,4 +23,16 @@ export function isRoute(route: string | string[] | RegExp) {
 
 export function ofRoute(route: string | string[] | RegExp): MonoTypeOperatorFunction<RouteNavigation> {
   return filter<RouteNavigation>(isRoute(route));
+}
+
+export function mapToParam<T>(key: string): OperatorFunction<RouteNavigation, T> {
+  return map<RouteNavigation, T>(action => action.payload.params[key]);
+}
+
+export function mapToQueryParam<T>(key: string): OperatorFunction<RouteNavigation, T> {
+  return map<RouteNavigation, T>(action => action.payload.queryParams[key]);
+}
+
+export function mapToData<T>(key: string): OperatorFunction<RouteNavigation, T> {
+  return map<RouteNavigation, T>(action => action.payload.data[key]);
 }
